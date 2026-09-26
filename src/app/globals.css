@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-nosy-deep:    var(--nosy-bg-deep);
+  --color-nosy-bg:      var(--nosy-bg);
+  --color-nosy-surface: var(--nosy-surface);
+  --color-nosy-hover:   var(--nosy-hover);
+  --color-nosy-border:  var(--nosy-border);
+
+  --color-nosy-fg:      var(--nosy-fg);
+  --color-nosy-soft:    var(--nosy-fg-soft);
+  --color-nosy-dim:     var(--nosy-fg-dim);
+
+  --color-nosy-choc:    var(--nosy-chocolate);
+  --color-nosy-choc-up: var(--nosy-chocolate-up);
+  --color-nosy-choc-dn: var(--nosy-chocolate-dn);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Thème Nosy — Dark (défaut) */
+:root {
+  --nosy-bg-deep:      #0d0805;
+  --nosy-bg:           #150d09;
+  --nosy-surface:      #1e120c;
+  --nosy-hover:        #2a1a11;
+  --nosy-border:       #33200f;
+
+  --nosy-chocolate:    #622b14;
+  --nosy-chocolate-up: #8b3f1e;
+  --nosy-chocolate-dn: #3f1c0d;
+
+  --nosy-fg:           #ede4d8;
+  --nosy-fg-soft:      #a89684;
+  --nosy-fg-dim:       #6b5c4d;
 }
 
+/* Thème Nosy — Light (papeterie) */
+:root[data-theme="light"] {
+  --nosy-bg-deep:      #f5efe6;
+  --nosy-bg:           #faf6ef;
+  --nosy-surface:      #efe7db;
+  --nosy-hover:        #e5dac9;
+  --nosy-border:       #d9ccb8;
+
+  --nosy-chocolate:    #622b14;
+  --nosy-chocolate-up: #4a1f0e;
+  --nosy-chocolate-dn: #8b3f1e;
+
+  --nosy-fg:           #2a1810;
+  --nosy-fg-soft:      #5c4636;
+  --nosy-fg-dim:       #8a7565;
+}
+
+html, body { height: 100%; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--nosy-bg);
+  color: var(--nosy-fg);
+  font-feature-settings: "cv11", "ss01";
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+::selection { background: var(--nosy-chocolate); color: #ede4d8; }
+
+/* Scrollbar discrète */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--nosy-border);
+  border-radius: 6px;
+  border: 2px solid var(--nosy-bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--nosy-chocolate-dn); }
+@keyframes palette-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-in {
+  animation: palette-in 140ms cubic-bezier(0.16, 1, 0.3, 1);
 }
