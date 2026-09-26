@@ -16,7 +16,7 @@ export function IdeShell({ children }: { children: React.ReactNode }) {
 
   // Sync URL → onglets : chaque navigation ajoute/active l'onglet
   useEffect(() => {
-    const path = pathname.replace(/^\//, "") || "src/app/whoami/about.tsx";
+    const path = pathname.replace(/^\//, "") || "src/app/whoami/about/page.tsx";
     if (getFile(path)) openTab(path);
   }, [pathname, openTab]);
 

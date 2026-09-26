@@ -15,8 +15,8 @@ type Store = {
 };
 
 export const useIDE = create<Store>((set, get) => ({
-  openTabs: ["src/app/whoami/about.tsx"],
-  openFolders: {}, // tous ouverts par défaut (voir isFolderOpen)
+openTabs: ["src/app/whoami/about/page.tsx"],
+  openFolders: {},
   theme: "dark",
 
   openTab: (path) => {
@@ -31,11 +31,17 @@ export const useIDE = create<Store>((set, get) => ({
   },
 
   toggleFolder: (path) => {
-    const cur = get().openFolders[path] ?? true;
+    const cur = get().isFolderOpen(path);
     set({ openFolders: { ...get().openFolders, [path]: !cur } });
   },
 
-  isFolderOpen: (path) => get().openFolders[path] ?? true,
+  isFolderOpen: (path) => {
+    const v = get().openFolders[path];
+    if (v !== undefined) return v;
+    // Par défaut : .vscode et public fermés, tout le reste ouvert
+    if (path === ".vscode" || path === "public") return false;
+    return true;
+  },
 
   toggleTheme: () => {
     const next = get().theme === "dark" ? "light" : "dark";

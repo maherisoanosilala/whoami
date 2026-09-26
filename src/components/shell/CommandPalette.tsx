@@ -42,7 +42,7 @@ export function CommandPalette() {
       >
         <Command
           label="Command Palette"
-          className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-2 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:text-nosy-dim"
+          className="**:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-[10px] **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-wider **:[[cmdk-group-heading]]:text-nosy-dim"
         >
           <div className="flex items-center gap-2 px-4 border-b border-nosy-border">
             <Search size={14} className="text-nosy-dim shrink-0" />
@@ -56,7 +56,7 @@ export function CommandPalette() {
             </kbd>
           </div>
 
-          <Command.List className="max-h-[340px] overflow-y-auto p-2">
+          <Command.List className="max-h-85 overflow-y-auto p-2">
             <Command.Empty className="px-3 py-6 text-center text-[13px] text-nosy-dim">
               Aucun résultat.
             </Command.Empty>

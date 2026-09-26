@@ -9,12 +9,11 @@ import { Stack } from "../files/Stack";
 import { Contact } from "../files/Contact";
 import { Readme } from "../files/Readme";
 
-
 const PREVIEWS: Record<string, () => React.ReactElement> = {
-  "src/app/whoami/about.tsx": About,
-  "src/app/whoami/missions.tsx": Missions,
-  "src/app/whoami/stack.tsx": Stack,
-  "src/app/whoami/contact.tsx": Contact,
+  "src/app/whoami/about/page.tsx": About,
+  "src/app/whoami/missions/page.tsx": Missions,
+  "src/app/whoami/stack/page.tsx": Stack,
+  "src/app/whoami/contact/page.tsx": Contact,
   "README.md": Readme,
 };
 
@@ -53,7 +52,7 @@ export function PreviewRenderer({ file }: { file: TreeFile }) {
   }
 
   return (
-    <div className="font-[family-name:var(--font-inter)] text-[14px] leading-relaxed">
+    <div className="font-(family-name:--font-inter) text-[14px] leading-relaxed">
       <Preview />
     </div>
   );

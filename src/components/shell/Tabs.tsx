@@ -4,34 +4,10 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { X, Code2, Eye } from "lucide-react";
 import { useState } from "react";
-import {
-  VscFile,
-  VscFileCode,
-  VscFileMedia,
-  VscJson,
-  VscMarkdown,
-  VscSettingsGear,
-  VscSymbolColor,
-} from "react-icons/vsc";
 import { getFile } from "@/lib/tree";
 import { useIDE } from "@/lib/store";
 import clsx from "clsx";
-
-function fileIcon(name: string, lang: string) {
-  if (lang === "tsx" || lang === "ts")
-    return { Icon: VscFileCode, color: "text-nosy-fg" };
-  if (lang === "json")
-    return { Icon: VscJson, color: "text-nosy-soft" };
-  if (lang === "css")
-    return { Icon: VscSymbolColor, color: "text-nosy-soft" };
-  if (lang === "markdown")
-    return { Icon: VscMarkdown, color: "text-nosy-soft" };
-  if (lang === "binary")
-    return { Icon: VscFileMedia, color: "text-nosy-dim" };
-  if (name.includes("config") || name.startsWith("."))
-    return { Icon: VscSettingsGear, color: "text-nosy-dim" };
-  return { Icon: VscFile, color: "text-nosy-soft" };
-}
+import { fileIcon } from "@/lib/fileIcon";
 
 export function Tabs() {
   const { openTabs, closeTab } = useIDE();
@@ -39,13 +15,21 @@ export function Tabs() {
   const router = useRouter();
 
   const [showCode, setShowCode] = useState<Record<string, boolean>>({});
-  const activePath = pathname.replace(/^\//, "") || "src/app/whoami/about.tsx";
+  const activePath =
+    pathname.replace(/^\//, "") || "src/app/whoami/about/page.tsx";
 
   const onClose = (path: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    const remaining = openTabs.filter((p) => p !== path);
     closeTab(path);
-    if (activePath === path) router.push("/");
+    if (activePath === path) {
+      if (remaining.length > 0) {
+        router.push(`/${remaining[remaining.length - 1]}`);
+      } else {
+        router.push("/");
+      }
+    }
   };
 
   const togglePreview = (path: string) => (e: React.MouseEvent) => {
@@ -54,7 +38,7 @@ export function Tabs() {
     const next = !showCode[path];
     setShowCode((p) => ({ ...p, [path]: next }));
     window.dispatchEvent(
-      new CustomEvent("whoami:preview", { detail: { path, showCode: next } })
+      new CustomEvent("whoami:preview", { detail: { path, showCode: next } }),
     );
   };
 
@@ -74,7 +58,7 @@ export function Tabs() {
               "group relative flex items-center gap-2 px-3 text-[13px] border-r border-nosy-border transition-colors whitespace-nowrap",
               isActive
                 ? "bg-nosy-surface text-nosy-fg"
-                : "text-nosy-dim hover:text-nosy-soft"
+                : "text-nosy-dim hover:text-nosy-soft",
             )}
           >
             {isActive && (

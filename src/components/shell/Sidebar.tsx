@@ -7,39 +7,16 @@ import {
   VscChevronRight,
   VscFolder,
   VscFolderOpened,
-  VscFile,
-  VscFileCode,
-  VscFileMedia,
-  VscJson,
-  VscMarkdown,
-  VscSettingsGear,
-  VscSymbolColor,
 } from "react-icons/vsc";
 import { TREE, hasContent, type TreeNode, type TreeFile } from "@/lib/tree";
 import { useIDE } from "@/lib/store";
 import clsx from "clsx";
-
-type IconCmp = React.ComponentType<{ size?: number; className?: string }>;
-
-function fileIcon(name: string, lang: string): { Icon: IconCmp; color: string } {
-  if (lang === "tsx" || lang === "ts")
-    return { Icon: VscFileCode, color: "text-nosy-choc-up" };
-  if (lang === "json")
-    return { Icon: VscJson, color: "text-nosy-soft" };
-  if (lang === "css")
-    return { Icon: VscSymbolColor, color: "text-nosy-soft" };
-  if (lang === "markdown")
-    return { Icon: VscMarkdown, color: "text-nosy-soft" };
-  if (lang === "binary")
-    return { Icon: VscFileMedia, color: "text-nosy-dim" };
-  if (name.includes("config") || name.startsWith("."))
-    return { Icon: VscSettingsGear, color: "text-nosy-dim" };
-  return { Icon: VscFile, color: "text-nosy-soft" };
-}
+import { fileIcon } from "@/lib/fileIcon";
 
 export function Sidebar() {
   const pathname = usePathname();
-  const idePath = pathname.replace(/^\//, "") || "src/app/whoami/about.tsx";
+  const idePath =
+    pathname.replace(/^\//, "") || "src/app/whoami/about/page.tsx";
 
   return (
     <aside className="w-64 shrink-0 border-r border-nosy-border bg-nosy-surface flex flex-col overflow-y-auto">
@@ -86,7 +63,9 @@ function FolderRow({
         ) : (
           <VscFolder size={14} className="text-nosy-choc-up shrink-0" />
         )}
-        <span className={clsx("truncate", isRoot && "font-medium text-nosy-fg")}>
+        <span
+          className={clsx("truncate", isRoot && "font-medium text-nosy-fg")}
+        >
           {folder.name}
         </span>
       </button>
@@ -152,7 +131,7 @@ function FileRow({
         "flex items-center gap-1.5 py-0.5 pr-2 rounded text-[13px] transition-colors relative",
         isActive
           ? "bg-nosy-hover text-nosy-fg"
-          : "text-nosy-soft hover:text-nosy-fg hover:bg-nosy-hover"
+          : "text-nosy-soft hover:text-nosy-fg hover:bg-nosy-hover",
       )}
       style={{ paddingLeft: `${8 + depth * 10}px` }}
     >
