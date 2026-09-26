@@ -4,10 +4,29 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { X, Code2, Eye } from "lucide-react";
 import { useState } from "react";
-import { getFile } from "@/lib/tree";
+import { getFile, type TreeFile } from "@/lib/tree";
 import { useIDE } from "@/lib/store";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
+
+/**
+ * Label d'un onglet :
+ * - Fichier à la racine → "README.md"
+ * - Fichier dans un dossier → "about/page.tsx"
+ */
+function getTabLabel(file: TreeFile): {
+  parent: string | null;
+  fileName: string;
+} {
+  const parts = file.path.split("/");
+  const fileName = file.name;
+
+  if (parts.length === 1) {
+    return { parent: null, fileName };
+  }
+
+  return { parent: parts[parts.length - 2], fileName };
+}
 
 export function Tabs() {
   const { openTabs, closeTab } = useIDE();
@@ -15,8 +34,7 @@ export function Tabs() {
   const router = useRouter();
 
   const [showCode, setShowCode] = useState<Record<string, boolean>>({});
-  const activePath =
-    pathname.replace(/^\//, "") || "src/app/whoami/about/page.tsx";
+  const activePath = pathname.replace(/^\//, "") || "README.md";
 
   const onClose = (path: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -38,7 +56,7 @@ export function Tabs() {
     const next = !showCode[path];
     setShowCode((p) => ({ ...p, [path]: next }));
     window.dispatchEvent(
-      new CustomEvent("whoami:preview", { detail: { path, showCode: next } }),
+      new CustomEvent("whoami:preview", { detail: { path, showCode: next } })
     );
   };
 
@@ -47,9 +65,11 @@ export function Tabs() {
       {openTabs.map((path) => {
         const file = getFile(path);
         if (!file) return null;
+
         const isActive = activePath === path;
         const isCode = showCode[path];
         const { Icon, color } = fileIcon(file.name, file.lang);
+        const { parent, fileName } = getTabLabel(file);
 
         return (
           <div
@@ -58,7 +78,7 @@ export function Tabs() {
               "group relative flex items-center gap-2 px-3 text-[13px] border-r border-nosy-border transition-colors whitespace-nowrap",
               isActive
                 ? "bg-nosy-surface text-nosy-fg"
-                : "text-nosy-dim hover:text-nosy-soft",
+                : "text-nosy-dim hover:text-nosy-soft"
             )}
           >
             {isActive && (
@@ -67,7 +87,12 @@ export function Tabs() {
 
             <Link href={`/${path}`} className="flex items-center gap-2">
               <Icon size={14} className={clsx(color, "shrink-0")} />
-              <span>{file.name}</span>
+              <span className="truncate">
+                {parent && (
+                  <span className="text-nosy-dim text-[11px]">{parent}/</span>
+                )}
+                <span>{fileName}</span>
+              </span>
             </Link>
 
             {isActive && file.hasPreview && (

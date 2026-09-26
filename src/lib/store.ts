@@ -15,7 +15,7 @@ type Store = {
 };
 
 export const useIDE = create<Store>((set, get) => ({
-openTabs: ["src/app/whoami/about/page.tsx"],
+openTabs:["README.md"],
   openFolders: {},
   theme: "dark",
 

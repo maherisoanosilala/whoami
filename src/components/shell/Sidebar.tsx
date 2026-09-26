@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useCallback, useSyncExternalStore } from "react";
 import {
   VscChevronDown,
   VscChevronRight,
@@ -9,14 +10,70 @@ import {
   VscFolderOpened,
 } from "react-icons/vsc";
 import { TREE, hasContent, type TreeNode, type TreeFile } from "@/lib/tree";
-import { useIDE } from "@/lib/store";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
 
+// --- Store externe pour sessionStorage ---
+
+const PREFIX = "whoami:folder:";
+const listeners = new Set<() => void>();
+
+function emit() {
+  listeners.forEach((l) => l());
+}
+
+function subscribe(cb: () => void) {
+  listeners.add(cb);
+  return () => listeners.delete(cb);
+}
+
+function readFolderState(path: string, fallback: boolean): boolean {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const v = sessionStorage.getItem(PREFIX + path);
+    if (v === null) return fallback;
+    return v === "1";
+  } catch {
+    return fallback;
+  }
+}
+
+function writeFolderState(path: string, value: boolean) {
+  try {
+    sessionStorage.setItem(PREFIX + path, value ? "1" : "0");
+    emit();
+  } catch {}
+}
+
+/**
+ * Hook custom pour lire/écrire l'état d'un dossier.
+ * - Au SSR / 1er render client : renvoie `fallback`
+ * - Après hydratation : renvoie la vraie valeur de sessionStorage
+ * - Aucune erreur d'hydratation possible
+ */
+function useFolderState(path: string, fallback: boolean) {
+  const getSnapshot = useCallback(
+    () => readFolderState(path, fallback),
+    [path, fallback]
+  );
+
+  const getServerSnapshot = useCallback(() => fallback, [fallback]);
+
+  const value = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  const setValue = useCallback(
+    (next: boolean) => writeFolderState(path, next),
+    [path]
+  );
+
+  return [value, setValue] as const;
+}
+
+// --- Sidebar ---
+
 export function Sidebar() {
   const pathname = usePathname();
-  const idePath =
-    pathname.replace(/^\//, "") || "src/app/whoami/about/page.tsx";
+  const idePath = pathname.replace(/^\//, "") || "README.md";
 
   return (
     <aside className="w-64 shrink-0 border-r border-nosy-border bg-nosy-surface flex flex-col overflow-y-auto">
@@ -30,6 +87,8 @@ export function Sidebar() {
   );
 }
 
+// --- Dossier récursif ---
+
 function FolderRow({
   folder,
   depth,
@@ -39,17 +98,18 @@ function FolderRow({
   depth: number;
   activePath: string;
 }) {
-  const { isFolderOpen, toggleFolder } = useIDE();
-
   if (folder.type === "file") return null;
 
-  const open = isFolderOpen(folder.path);
   const isRoot = depth === 0;
+  const defaultOpen = !(folder.path === ".vscode" || folder.path === "public");
+
+  // ⚡ useSyncExternalStore → SSR = defaultOpen, client = sessionStorage
+  const [open, setOpen] = useFolderState(folder.path, defaultOpen);
 
   return (
     <div>
       <button
-        onClick={() => toggleFolder(folder.path)}
+        onClick={() => setOpen(!open)}
         className="w-full flex items-center gap-1 px-2 py-0.5 text-[13px] text-nosy-soft hover:text-nosy-fg rounded transition-colors"
         style={{ paddingLeft: `${8 + depth * 10}px` }}
       >
@@ -63,9 +123,7 @@ function FolderRow({
         ) : (
           <VscFolder size={14} className="text-nosy-choc-up shrink-0" />
         )}
-        <span
-          className={clsx("truncate", isRoot && "font-medium text-nosy-fg")}
-        >
+        <span className={clsx("truncate", isRoot && "font-medium text-nosy-fg")}>
           {folder.name}
         </span>
       </button>
@@ -97,6 +155,8 @@ function FolderRow({
     </div>
   );
 }
+
+// --- Fichier ---
 
 function FileRow({
   file,
@@ -131,7 +191,7 @@ function FileRow({
         "flex items-center gap-1.5 py-0.5 pr-2 rounded text-[13px] transition-colors relative",
         isActive
           ? "bg-nosy-hover text-nosy-fg"
-          : "text-nosy-soft hover:text-nosy-fg hover:bg-nosy-hover",
+          : "text-nosy-soft hover:text-nosy-fg hover:bg-nosy-hover"
       )}
       style={{ paddingLeft: `${8 + depth * 10}px` }}
     >

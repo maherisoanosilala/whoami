@@ -39,6 +39,69 @@ export const TREE: TreeFolder = {
     },
     {
       type: "folder",
+      name: "node_modules",
+      path: "node_modules",
+      children: [
+        {
+          type: "file",
+          name: "next",
+          path: "node_modules/next",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "react",
+          path: "node_modules/react",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "react-dom",
+          path: "node_modules/react-dom",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "typescript",
+          path: "node_modules/typescript",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "tailwindcss",
+          path: "node_modules/tailwindcss",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "zustand",
+          path: "node_modules/zustand",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "lucide-react",
+          path: "node_modules/lucide-react",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: ".bin",
+          path: "node_modules/.bin",
+          lang: "text",
+          content: EMPTY,
+        },
+      ],
+    },
+    {
+      type: "folder",
       name: "public",
       path: "public",
       children: [
@@ -176,16 +239,95 @@ export default function Page() {
         },
       ],
     },
-    { type: "file", name: ".gitignore",         path: ".gitignore",         lang: "text",     content: EMPTY },
-    { type: "file", name: "AGENTS.md",          path: "AGENTS.md",          lang: "markdown", content: EMPTY },
-    { type: "file", name: "CLAUDE.md",          path: "CLAUDE.md",          lang: "markdown", content: EMPTY },
-    { type: "file", name: "README.md",          path: "README.md",          lang: "markdown", content: EMPTY },
-    { type: "file", name: "eslint.config.mjs",  path: "eslint.config.mjs",  lang: "js",       content: EMPTY },
-    { type: "file", name: "next.config.ts",     path: "next.config.ts",     lang: "ts",       content: EMPTY },
-    { type: "file", name: "package.json",       path: "package.json",       lang: "json",     content: EMPTY },
-    { type: "file", name: "postcss.config.mjs", path: "postcss.config.mjs", lang: "js",       content: EMPTY },
-    { type: "file", name: "tsconfig.json",      path: "tsconfig.json",      lang: "json",     content: EMPTY },
-    { type: "file", name: "yarn.lock",          path: "yarn.lock",          lang: "text",     content: EMPTY },
+    {
+      type: "file",
+      name: ".gitignore",
+      path: ".gitignore",
+      lang: "text",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "AGENTS.md",
+      path: "AGENTS.md",
+      lang: "markdown",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "CLAUDE.md",
+      path: "CLAUDE.md",
+      lang: "markdown",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "README.md",
+      path: "README.md",
+      lang: "markdown",
+      hasPreview: true,
+      content: `# whoami
+
+Portfolio-éditeur de **Lala Arthur RAZAFIARINOSY**.
+
+Freelance Fullstack Next.js basé à Madagascar.
+Je conçois et livre des produits web de bout en bout.
+
+## Sommaire
+
+- about/     Qui je suis
+- missions/  Mes études de cas
+- stack/     Mes outils
+- contact/   Me joindre
+
+## Stack
+
+Next.js · React · TypeScript · Tailwind
+Node.js · NestJS · MongoDB · Firebase
+`,
+    },
+    {
+      type: "file",
+      name: "eslint.config.mjs",
+      path: "eslint.config.mjs",
+      lang: "js",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "next.config.ts",
+      path: "next.config.ts",
+      lang: "ts",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "package.json",
+      path: "package.json",
+      lang: "json",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "postcss.config.mjs",
+      path: "postcss.config.mjs",
+      lang: "js",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "tsconfig.json",
+      path: "tsconfig.json",
+      lang: "json",
+      content: EMPTY,
+    },
+    {
+      type: "file",
+      name: "yarn.lock",
+      path: "yarn.lock",
+      lang: "text",
+      content: EMPTY,
+    },
   ],
 };
 
@@ -198,7 +340,6 @@ export function flattenTree(node: TreeNode): TreeFile[] {
 
 export const ALL_FILES = flattenTree(TREE);
 
-export const getFile = (path: string) =>
-  ALL_FILES.find((f) => f.path === path);
+export const getFile = (path: string) => ALL_FILES.find((f) => f.path === path);
 
 export const hasContent = (file: TreeFile) => file.content.trim() !== "";
