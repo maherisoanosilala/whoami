@@ -15,7 +15,7 @@ export function IdeShell({ children }: { children: React.ReactNode }) {
   const openTab = useIDE((s) => s.openTab);
 
   useEffect(() => {
-    const path = pathname.replace(/^\//, "") || "src/app/whoami/about/page.tsx";
+    const path = pathname.replace(/^\//, "");
     if (getFile(path)) openTab(path);
   }, [pathname, openTab]);
 
