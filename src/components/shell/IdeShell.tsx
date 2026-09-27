@@ -8,15 +8,15 @@ import { Tabs } from "./Tabs";
 import { StatusBar } from "./StatusBar";
 import { CommandPalette } from "./CommandPalette";
 import { useIDE } from "@/lib/store";
-import { getFile } from "@/lib/tree";
+import { getFile, slugToPath } from "@/lib/tree";
 
 export function IdeShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const openTab = useIDE((s) => s.openTab);
 
-  // Sync URL → onglets : chaque navigation ajoute/active l'onglet
   useEffect(() => {
-    const path = pathname.replace(/^\//, "");
+    const slug = pathname.replace(/^\//, "");
+    const path = slugToPath(slug) ?? "README.md";
     if (getFile(path)) openTab(path);
   }, [pathname, openTab]);
 

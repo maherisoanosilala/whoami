@@ -2,6 +2,7 @@ export type TreeFile = {
   type: "file";
   name: string;
   path: string;
+  slug?: string; // ← AJOUT : URL courte (ex: "about" → /about)
   lang: string;
   content: string;
   hasPreview?: boolean;
@@ -33,6 +34,62 @@ export const TREE: TreeFolder = {
           name: "settings.json",
           path: ".vscode/settings.json",
           lang: "json",
+          content: EMPTY,
+        },
+      ],
+    },
+    {
+      type: "folder",
+      name: ".next",
+      path: ".next",
+      children: [
+        {
+          type: "file",
+          name: "BUILD_ID",
+          path: ".next/BUILD_ID",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "app-build-manifest.json",
+          path: ".next/app-build-manifest.json",
+          lang: "json",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "build-manifest.json",
+          path: ".next/build-manifest.json",
+          lang: "json",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "package.json",
+          path: ".next/package.json",
+          lang: "json",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "trace",
+          path: ".next/trace",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "server",
+          path: ".next/server",
+          lang: "text",
+          content: EMPTY,
+        },
+        {
+          type: "file",
+          name: "static",
+          path: ".next/static",
+          lang: "text",
           content: EMPTY,
         },
       ],
@@ -166,6 +223,7 @@ export const TREE: TreeFolder = {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/about/page.tsx",
+                      slug: "about", // ← AJOUT
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { About } from "@/components/content/About";
@@ -185,6 +243,7 @@ export default function Page() {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/missions/page.tsx",
+                      slug: "missions", // ← AJOUT
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { Missions } from "@/components/content/Missions";
@@ -204,6 +263,7 @@ export default function Page() {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/stack/page.tsx",
+                      slug: "stack", // ← AJOUT
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { Stack } from "@/components/content/Stack";
@@ -223,6 +283,7 @@ export default function Page() {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/contact/page.tsx",
+                      slug: "contact", // ← AJOUT
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { Contact } from "@/components/content/Contact";
@@ -264,6 +325,7 @@ export default function Page() {
       type: "file",
       name: "README.md",
       path: "README.md",
+      slug: "", // ← AJOUT : racine /
       lang: "markdown",
       hasPreview: true,
       content: `# whoami
@@ -343,3 +405,33 @@ export const ALL_FILES = flattenTree(TREE);
 export const getFile = (path: string) => ALL_FILES.find((f) => f.path === path);
 
 export const hasContent = (file: TreeFile) => file.content.trim() !== "";
+
+// --- Résolution slug ↔ path (URLs propres) ---
+
+export const SLUG_TO_PATH: Record<string, string> = {};
+export const PATH_TO_SLUG: Record<string, string> = {};
+
+for (const file of ALL_FILES) {
+  if (file.slug !== undefined) {
+    SLUG_TO_PATH[file.slug] = file.path;
+    PATH_TO_SLUG[file.path] = file.slug;
+  }
+  // Backward compat : les anciens chemins restent accessibles
+  SLUG_TO_PATH[file.path] = file.path;
+}
+
+/** Path interne → slug pour l'URL. Ex: "src/app/whoami/about/page.tsx" → "about" */
+export function pathToSlug(path: string): string {
+  return PATH_TO_SLUG[path] ?? path;
+}
+
+/** Slug d'URL → path interne. Ex: "about" → "src/app/whoami/about/page.tsx" */
+export function slugToPath(slug: string): string | undefined {
+  return SLUG_TO_PATH[slug];
+}
+
+/** Slug d'URL → fichier complet */
+export function getFileBySlug(slug: string): TreeFile | undefined {
+  const p = slugToPath(slug);
+  return p ? getFile(p) : undefined;
+}

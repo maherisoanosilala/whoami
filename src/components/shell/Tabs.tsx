@@ -4,7 +4,12 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { X, Code2, Eye } from "lucide-react";
 import { useState } from "react";
-import { getFile, type TreeFile } from "@/lib/tree";
+import {
+  getFile,
+  pathToSlug,
+  slugToPath,
+  type TreeFile,
+} from "@/lib/tree";
 import { useIDE } from "@/lib/store";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
@@ -34,7 +39,8 @@ export function Tabs() {
   const router = useRouter();
 
   const [showCode, setShowCode] = useState<Record<string, boolean>>({});
-  const activePath = pathname.replace(/^\//, "") || "README.md";
+  const activeSlug = pathname.replace(/^\//, "");
+  const activePath = slugToPath(activeSlug) ?? "README.md";
 
   const onClose = (path: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,7 +49,7 @@ export function Tabs() {
     closeTab(path);
     if (activePath === path) {
       if (remaining.length > 0) {
-        router.push(`/${remaining[remaining.length - 1]}`);
+        router.push(`/${pathToSlug(remaining[remaining.length - 1])}`);
       } else {
         router.push("/");
       }
@@ -85,7 +91,10 @@ export function Tabs() {
               <span className="absolute top-0 left-0 right-0 h-[1.5px] bg-nosy-choc" />
             )}
 
-            <Link href={`/${path}`} className="flex items-center gap-2">
+            <Link
+              href={`/${pathToSlug(path)}`}
+              className="flex items-center gap-2"
+            >
               <Icon size={14} className={clsx(color, "shrink-0")} />
               <span className="truncate">
                 {parent && (

@@ -9,7 +9,14 @@ import {
   VscFolder,
   VscFolderOpened,
 } from "react-icons/vsc";
-import { TREE, hasContent, type TreeNode, type TreeFile } from "@/lib/tree";
+import {
+  TREE,
+  hasContent,
+  pathToSlug,
+  slugToPath,
+  type TreeNode,
+  type TreeFile,
+} from "@/lib/tree";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
 
@@ -45,12 +52,6 @@ function writeFolderState(path: string, value: boolean) {
   } catch {}
 }
 
-/**
- * Hook custom pour lire/écrire l'état d'un dossier.
- * - Au SSR / 1er render client : renvoie `fallback`
- * - Après hydratation : renvoie la vraie valeur de sessionStorage
- * - Aucune erreur d'hydratation possible
- */
 function useFolderState(path: string, fallback: boolean) {
   const getSnapshot = useCallback(
     () => readFolderState(path, fallback),
@@ -73,7 +74,8 @@ function useFolderState(path: string, fallback: boolean) {
 
 export function Sidebar() {
   const pathname = usePathname();
-  const idePath = pathname.replace(/^\//, "") || "README.md";
+  const slug = pathname.replace(/^\//, "");
+  const idePath = slugToPath(slug) ?? "README.md";
 
   return (
     <aside className="w-64 shrink-0 border-r border-nosy-border bg-nosy-surface flex flex-col overflow-y-auto">
@@ -101,9 +103,12 @@ function FolderRow({
   if (folder.type === "file") return null;
 
   const isRoot = depth === 0;
-  const defaultOpen = !(folder.path === ".vscode" || folder.path === "public");
+  const defaultOpen = !(
+    folder.path === ".vscode" ||
+    folder.path === "public" ||
+    folder.path === "node_modules"
+  );
 
-  // ⚡ useSyncExternalStore → SSR = defaultOpen, client = sessionStorage
   const [open, setOpen] = useFolderState(folder.path, defaultOpen);
 
   return (
@@ -186,7 +191,7 @@ function FileRow({
 
   return (
     <Link
-      href={`/${file.path}`}
+      href={`/${pathToSlug(file.path)}`}
       className={clsx(
         "flex items-center gap-1.5 py-0.5 pr-2 rounded text-[13px] transition-colors relative",
         isActive

@@ -1,6 +1,5 @@
-
 import { notFound } from "next/navigation";
-import { getFile } from "@/lib/tree";
+import { getFileBySlug } from "@/lib/tree";
 import { PreviewRenderer } from "@/components/content/PreviewRenderer";
 
 export default async function FilePage({
@@ -9,8 +8,8 @@ export default async function FilePage({
   params: Promise<{ path?: string[] }>;
 }) {
   const { path } = await params;
-  const filePath = path?.join("/") ?? "README.md";
-  const file = getFile(filePath);
+  const slug = path?.join("/") ?? "";
+  const file = getFileBySlug(slug);
 
   if (!file) notFound();
 

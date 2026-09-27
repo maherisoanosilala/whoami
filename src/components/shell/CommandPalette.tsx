@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import { Sun, Moon, Home, Search } from "lucide-react";
-import { ALL_FILES } from "@/lib/tree";
+import { ALL_FILES, pathToSlug } from "@/lib/tree";
 import { useIDE } from "@/lib/store";
 
 export function CommandPalette() {
@@ -68,7 +68,7 @@ export function CommandPalette() {
                   onSelect={() =>
                     run(() => {
                       openTab(file.path);
-                      router.push(`/${file.path}`);
+                      router.push(`/${pathToSlug(file.path)}`);
                     })
                   }
                   className="flex items-center gap-2.5 px-3 py-2 rounded-md text-[13px] text-nosy-soft cursor-pointer data-[selected=true]:bg-nosy-hover data-[selected=true]:text-nosy-fg"
