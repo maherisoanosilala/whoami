@@ -36,7 +36,7 @@ export function About() {
       {/* Télécharger mon CV */}
       <div className="pt-2">
         <a
-          href="/cv.pdf"
+          href="/Cv_Maherisoa.pdf"
           download
           className="group inline-flex items-center gap-2 py-2 px-3.5 border border-nosy-border rounded-md text-[13px] text-nosy-soft transition-all duration-200 hover:border-nosy-choc-up hover:text-nosy-fg hover:bg-nosy-surface/60"
         >
