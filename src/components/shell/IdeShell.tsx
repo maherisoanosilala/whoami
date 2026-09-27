@@ -15,7 +15,9 @@ export function IdeShell({ children }: { children: React.ReactNode }) {
   const openTab = useIDE((s) => s.openTab);
 
   useEffect(() => {
-    const path = pathname.replace(/^\//, "");
+    // URL = slug → on le convertit en path interne
+    const slug = pathname.replace(/^\//, "");
+    const path = slugToPath(slug) ?? "README.md";
     if (getFile(path)) openTab(path);
   }, [pathname, openTab]);
 
