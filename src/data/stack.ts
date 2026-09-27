@@ -1,8 +1,5 @@
-export interface StackGroup {
-  label: string;
-  icon: string;
-  items: string[];
-}
+import { StackGroup } from "@/types/whoami.type";
+
 
 export const STACK: StackGroup[] = [
   {

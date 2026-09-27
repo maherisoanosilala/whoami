@@ -14,11 +14,10 @@ import {
   hasContent,
   pathToSlug,
   slugToPath,
-  type TreeNode,
-  type TreeFile,
 } from "@/lib/tree";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
+import { TreeFile, TreeNode } from "@/lib/whoami";
 
 // --- Store externe pour sessionStorage ---
 

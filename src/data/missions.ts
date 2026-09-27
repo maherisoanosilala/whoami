@@ -1,13 +1,5 @@
-export interface Mission {
-  id: string;
-  title: string;
-  context: string;
-  role: string;
-  decisions: string[];
-  result: string;
-  stack: string[];
-  featured: boolean;
-}
+import { Mission } from "@/types/whoami.type";
+
 
 export const MISSIONS: Mission[] = [
   {

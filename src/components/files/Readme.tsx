@@ -50,10 +50,10 @@ export function Readme() {
       </motion.div>
 
       <motion.p variants={item} className="text-nosy-dim text-[13px]">
-        → Ouvre <span className="text-nosy-choc-up">about.tsx</span>,{" "}
-        <span className="text-nosy-choc-up">missions.tsx</span>,{" "}
-        <span className="text-nosy-choc-up">stack.tsx</span> ou{" "}
-        <span className="text-nosy-choc-up">contact.tsx</span>.
+        → Ouvre <span className="text-nosy-choc-up">about/page.tsx</span>,{" "}
+        <span className="text-nosy-choc-up">missions/page.tsx</span>,{" "}
+        <span className="text-nosy-choc-up">stack/page.tsx</span> ou{" "}
+        <span className="text-nosy-choc-up">contact/page.tsx</span>.
       </motion.p>
     </motion.article>
   );

@@ -1,21 +1,5 @@
-export type TreeFile = {
-  type: "file";
-  name: string;
-  path: string;
-  slug?: string; // ← AJOUT : URL courte (ex: "about" → /about)
-  lang: string;
-  content: string;
-  hasPreview?: boolean;
-};
+import { TreeFile, TreeFolder, TreeNode } from "./whoami";
 
-export type TreeFolder = {
-  type: "folder";
-  name: string;
-  path: string;
-  children: TreeNode[];
-};
-
-export type TreeNode = TreeFile | TreeFolder;
 
 const EMPTY = ""; // fichiers "juste affichage" → désactivés
 

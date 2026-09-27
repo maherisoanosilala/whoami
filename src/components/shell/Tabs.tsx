@@ -8,11 +8,11 @@ import {
   getFile,
   pathToSlug,
   slugToPath,
-  type TreeFile,
 } from "@/lib/tree";
 import { useIDE } from "@/lib/store";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
+import { TreeFile } from "@/lib/whoami";
 
 /**
  * Label d'un onglet :
