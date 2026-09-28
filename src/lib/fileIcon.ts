@@ -1,3 +1,4 @@
+import { BiLogoTypescript } from "react-icons/bi";
 import { FaReact } from "react-icons/fa";
 import {
   VscFile,
@@ -9,8 +10,10 @@ import {
 } from "react-icons/vsc";
 
 export function fileIcon(name: string, lang: string) {
-  if (lang === "tsx" || lang === "ts")
+  if (lang === "tsx" )
     return { Icon: FaReact, color: "text-nosy-fg" };
+   if (lang === "ts")
+    return { Icon: BiLogoTypescript, color: "text-nosy-fg" };
   if (lang === "json") return { Icon: VscJson, color: "text-nosy-soft" };
   if (lang === "css") return { Icon: VscSymbolColor, color: "text-nosy-soft" };
   if (lang === "markdown")

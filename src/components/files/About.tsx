@@ -78,7 +78,7 @@ export function About() {
         About
         <motion.span
           variants={underline}
-          className="absolute -bottom-1 left-0 right-0 h-[2px] origin-left rounded-full bg-nosy-choc"
+          className="absolute -bottom-1 left-0 right-0 h-0.5 origin-left rounded-full bg-nosy-choc"
         />
       </motion.h2>
 

@@ -12,7 +12,8 @@ import {
 import { useIDE } from "@/lib/store";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
-import { TreeFile } from "@/lib/whoami";
+import { TreeFile } from "@/types/whoami.type";
+
 
 /**
  * Label d'un onglet :

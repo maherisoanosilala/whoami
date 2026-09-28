@@ -28,7 +28,7 @@ export function CodeViewer({ code, lang }: { code: string; lang: string }) {
   return (
     <Highlight code={code.trimEnd()} language={language} theme={nosyTheme}>
       {({ tokens, getLineProps, getTokenProps }) => (
-        <pre className="font-[family-name:var(--font-mono)] text-[13px] leading-[1.7] m-0">
+        <pre className="font-mono text-[13px] leading-[1.7] m-0">
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line })} className="table-row">
               <span className="table-cell pr-4 text-right select-none text-nosy-dim w-10">

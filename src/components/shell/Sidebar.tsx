@@ -17,7 +17,8 @@ import {
 } from "@/lib/tree";
 import clsx from "clsx";
 import { fileIcon } from "@/lib/fileIcon";
-import { TreeFile, TreeNode } from "@/lib/whoami";
+import { TreeFile, TreeNode } from "@/types/whoami.type";
+
 
 // --- Store externe pour sessionStorage ---
 
