@@ -2,6 +2,22 @@
 
 import { create } from "zustand";
 import type { ThemeMode } from "./theme";
+import { TREE} from "./tree";
+import { TreeFolder } from "@/types/whoami.type";
+
+function findFolderByPath(
+  node: TreeFolder,
+  path: string
+): TreeFolder | undefined {
+  if (node.path === path) return node;
+  for (const child of node.children) {
+    if (child.type === "folder") {
+      const found = findFolderByPath(child, path);
+      if (found) return found;
+    }
+  }
+  return undefined;
+}
 
 type Store = {
   openTabs: string[];
@@ -15,7 +31,7 @@ type Store = {
 };
 
 export const useIDE = create<Store>((set, get) => ({
-openTabs:["README.md"],
+  openTabs: ["README.md"],
   openFolders: {},
   theme: "dark",
 
@@ -36,11 +52,11 @@ openTabs:["README.md"],
   },
 
   isFolderOpen: (path) => {
-    const v = get().openFolders[path];
-    if (v !== undefined) return v;
-    // Par défaut : .vscode et public fermés, tout le reste ouvert
-    if (path === ".vscode" || path === "public") return false;
-    return true;
+    const explicit = get().openFolders[path];
+    if (explicit !== undefined) return explicit;
+    // Sinon, on lit defaultCollapsed dans le tree
+    const folder = findFolderByPath(TREE, path);
+    return !(folder?.defaultCollapsed ?? false);
   },
 
   toggleTheme: () => {

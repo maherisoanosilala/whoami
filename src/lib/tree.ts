@@ -1,7 +1,6 @@
-import { TreeFile, TreeFolder, TreeNode } from "./whoami";
+import { TreeFile, TreeFolder, TreeNode } from "@/types/whoami.type";
 
-
-const EMPTY = ""; // fichiers "juste affichage" → désactivés
+const EMPTY = "";
 
 export const TREE: TreeFolder = {
   type: "folder",
@@ -12,154 +11,50 @@ export const TREE: TreeFolder = {
       type: "folder",
       name: ".vscode",
       path: ".vscode",
+      defaultCollapsed: true,       // ← fermé
       children: [
-        {
-          type: "file",
-          name: "settings.json",
-          path: ".vscode/settings.json",
-          lang: "json",
-          content: EMPTY,
-        },
+        { type: "file", name: "settings.json", path: ".vscode/settings.json", lang: "json", content: EMPTY },
       ],
     },
     {
       type: "folder",
       name: ".next",
       path: ".next",
+      defaultCollapsed: true,       // ← fermé
       children: [
-        {
-          type: "file",
-          name: "BUILD_ID",
-          path: ".next/BUILD_ID",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "app-build-manifest.json",
-          path: ".next/app-build-manifest.json",
-          lang: "json",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "build-manifest.json",
-          path: ".next/build-manifest.json",
-          lang: "json",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "package.json",
-          path: ".next/package.json",
-          lang: "json",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "trace",
-          path: ".next/trace",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "server",
-          path: ".next/server",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "static",
-          path: ".next/static",
-          lang: "text",
-          content: EMPTY,
-        },
+        { type: "file", name: "BUILD_ID",                  path: ".next/BUILD_ID",                  lang: "text", content: EMPTY },
+        { type: "file", name: "app-build-manifest.json",   path: ".next/app-build-manifest.json",   lang: "json", content: EMPTY },
+        { type: "file", name: "build-manifest.json",       path: ".next/build-manifest.json",       lang: "json", content: EMPTY },
+        { type: "file", name: "package.json",              path: ".next/package.json",              lang: "json", content: EMPTY },
+        { type: "file", name: "trace",                     path: ".next/trace",                     lang: "text", content: EMPTY },
+        { type: "file", name: "server",                    path: ".next/server",                    lang: "text", content: EMPTY },
+        { type: "file", name: "static",                    path: ".next/static",                    lang: "text", content: EMPTY },
       ],
     },
     {
       type: "folder",
       name: "node_modules",
       path: "node_modules",
+      defaultCollapsed: true,       // ← fermé
       children: [
-        {
-          type: "file",
-          name: "next",
-          path: "node_modules/next",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "react",
-          path: "node_modules/react",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "react-dom",
-          path: "node_modules/react-dom",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "typescript",
-          path: "node_modules/typescript",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "tailwindcss",
-          path: "node_modules/tailwindcss",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "zustand",
-          path: "node_modules/zustand",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "lucide-react",
-          path: "node_modules/lucide-react",
-          lang: "text",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: ".bin",
-          path: "node_modules/.bin",
-          lang: "text",
-          content: EMPTY,
-        },
+        { type: "file", name: "next",         path: "node_modules/next",         lang: "text", content: EMPTY },
+        { type: "file", name: "react",        path: "node_modules/react",        lang: "text", content: EMPTY },
+        { type: "file", name: "react-dom",    path: "node_modules/react-dom",    lang: "text", content: EMPTY },
+        { type: "file", name: "typescript",   path: "node_modules/typescript",   lang: "text", content: EMPTY },
+        { type: "file", name: "tailwindcss",  path: "node_modules/tailwindcss",  lang: "text", content: EMPTY },
+        { type: "file", name: "zustand",      path: "node_modules/zustand",      lang: "text", content: EMPTY },
+        { type: "file", name: "lucide-react", path: "node_modules/lucide-react", lang: "text", content: EMPTY },
+        { type: "file", name: ".bin",         path: "node_modules/.bin",         lang: "text", content: EMPTY },
       ],
     },
     {
       type: "folder",
       name: "public",
       path: "public",
+      defaultCollapsed: true,       // ← fermé
       children: [
-        {
-          type: "file",
-          name: "favicon.ico",
-          path: "public/favicon.ico",
-          lang: "binary",
-          content: EMPTY,
-        },
-        {
-          type: "file",
-          name: "og.png",
-          path: "public/og.png",
-          lang: "binary",
-          content: EMPTY,
-        },
+        { type: "file", name: "favicon.ico", path: "public/favicon.ico", lang: "binary", content: EMPTY },
+        { type: "file", name: "og.png",      path: "public/og.png",      lang: "binary", content: EMPTY },
       ],
     },
     {
@@ -172,27 +67,9 @@ export const TREE: TreeFolder = {
           name: "app",
           path: "src/app",
           children: [
-            {
-              type: "file",
-              name: "layout.tsx",
-              path: "src/app/layout.tsx",
-              lang: "tsx",
-              content: EMPTY,
-            },
-            {
-              type: "file",
-              name: "page.tsx",
-              path: "src/app/page.tsx",
-              lang: "tsx",
-              content: EMPTY,
-            },
-            {
-              type: "file",
-              name: "globals.css",
-              path: "src/app/globals.css",
-              lang: "css",
-              content: EMPTY,
-            },
+            { type: "file", name: "layout.tsx",  path: "src/app/layout.tsx",  lang: "tsx", content: EMPTY },
+            { type: "file", name: "page.tsx",    path: "src/app/page.tsx",    lang: "tsx", content: EMPTY },
+            { type: "file", name: "globals.css", path: "src/app/globals.css", lang: "css", content: EMPTY },
             {
               type: "folder",
               name: "whoami",
@@ -207,7 +84,7 @@ export const TREE: TreeFolder = {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/about/page.tsx",
-                      slug: "about", // ← AJOUT
+                      slug: "about",
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { About } from "@/components/content/About";
@@ -227,7 +104,7 @@ export default function Page() {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/missions/page.tsx",
-                      slug: "missions", // ← AJOUT
+                      slug: "missions",
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { Missions } from "@/components/content/Missions";
@@ -247,7 +124,7 @@ export default function Page() {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/stack/page.tsx",
-                      slug: "stack", // ← AJOUT
+                      slug: "stack",
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { Stack } from "@/components/content/Stack";
@@ -267,7 +144,7 @@ export default function Page() {
                       type: "file",
                       name: "page.tsx",
                       path: "src/app/whoami/contact/page.tsx",
-                      slug: "contact", // ← AJOUT
+                      slug: "contact",
                       lang: "tsx",
                       hasPreview: true,
                       content: `import { Contact } from "@/components/content/Contact";
@@ -284,32 +161,14 @@ export default function Page() {
         },
       ],
     },
-    {
-      type: "file",
-      name: ".gitignore",
-      path: ".gitignore",
-      lang: "text",
-      content: EMPTY,
-    },
-    {
-      type: "file",
-      name: "AGENTS.md",
-      path: "AGENTS.md",
-      lang: "markdown",
-      content: EMPTY,
-    },
-    {
-      type: "file",
-      name: "CLAUDE.md",
-      path: "CLAUDE.md",
-      lang: "markdown",
-      content: EMPTY,
-    },
+    { type: "file", name: ".gitignore",         path: ".gitignore",         lang: "text",     content: EMPTY },
+    { type: "file", name: "AGENTS.md",          path: "AGENTS.md",          lang: "markdown", content: EMPTY },
+    { type: "file", name: "CLAUDE.md",          path: "CLAUDE.md",          lang: "markdown", content: EMPTY },
     {
       type: "file",
       name: "README.md",
       path: "README.md",
-      slug: "", // ← AJOUT : racine /
+      slug: "",
       lang: "markdown",
       hasPreview: true,
       content: `# whoami
@@ -332,48 +191,12 @@ Next.js · React · TypeScript · Tailwind
 Node.js · NestJS · MongoDB · Firebase
 `,
     },
-    {
-      type: "file",
-      name: "eslint.config.mjs",
-      path: "eslint.config.mjs",
-      lang: "js",
-      content: EMPTY,
-    },
-    {
-      type: "file",
-      name: "next.config.ts",
-      path: "next.config.ts",
-      lang: "ts",
-      content: EMPTY,
-    },
-    {
-      type: "file",
-      name: "package.json",
-      path: "package.json",
-      lang: "json",
-      content: EMPTY,
-    },
-    {
-      type: "file",
-      name: "postcss.config.mjs",
-      path: "postcss.config.mjs",
-      lang: "js",
-      content: EMPTY,
-    },
-    {
-      type: "file",
-      name: "tsconfig.json",
-      path: "tsconfig.json",
-      lang: "json",
-      content: EMPTY,
-    },
-    {
-      type: "file",
-      name: "yarn.lock",
-      path: "yarn.lock",
-      lang: "text",
-      content: EMPTY,
-    },
+    { type: "file", name: "eslint.config.mjs",  path: "eslint.config.mjs",  lang: "js",   content: EMPTY },
+    { type: "file", name: "next.config.ts",     path: "next.config.ts",     lang: "ts",   content: EMPTY },
+    { type: "file", name: "package.json",       path: "package.json",       lang: "json", content: EMPTY },
+    { type: "file", name: "postcss.config.mjs", path: "postcss.config.mjs", lang: "js",   content: EMPTY },
+    { type: "file", name: "tsconfig.json",      path: "tsconfig.json",      lang: "json", content: EMPTY },
+    { type: "file", name: "yarn.lock",          path: "yarn.lock",          lang: "text", content: EMPTY },
   ],
 };
 
@@ -400,21 +223,17 @@ for (const file of ALL_FILES) {
     SLUG_TO_PATH[file.slug] = file.path;
     PATH_TO_SLUG[file.path] = file.slug;
   }
-  // Backward compat : les anciens chemins restent accessibles
   SLUG_TO_PATH[file.path] = file.path;
 }
 
-/** Path interne → slug pour l'URL. Ex: "src/app/whoami/about/page.tsx" → "about" */
 export function pathToSlug(path: string): string {
   return PATH_TO_SLUG[path] ?? path;
 }
 
-/** Slug d'URL → path interne. Ex: "about" → "src/app/whoami/about/page.tsx" */
 export function slugToPath(slug: string): string | undefined {
   return SLUG_TO_PATH[slug];
 }
 
-/** Slug d'URL → fichier complet */
 export function getFileBySlug(slug: string): TreeFile | undefined {
   const p = slugToPath(slug);
   return p ? getFile(p) : undefined;

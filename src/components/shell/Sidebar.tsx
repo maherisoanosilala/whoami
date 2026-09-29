@@ -106,7 +106,8 @@ function FolderRow({
   const defaultOpen = !(
     folder.path === ".vscode" ||
     folder.path === "public" ||
-    folder.path === "node_modules"
+    folder.path === "node_modules" ||
+    folder.path === ".next"
   );
 
   const [open, setOpen] = useFolderState(folder.path, defaultOpen);

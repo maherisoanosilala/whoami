@@ -29,6 +29,7 @@ export type TreeFolder = {
   name: string;
   path: string;
   children: TreeNode[];
+  defaultCollapsed?: boolean;   // ← ajoute
 };
 
 export type TreeNode = TreeFile | TreeFolder;
