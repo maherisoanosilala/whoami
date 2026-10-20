@@ -2,13 +2,13 @@ export const profile = {
   name: "RAZAFIARINOSY Lala Arthur",
   shortName: "Lala Arthur",
   handle: "maherisoanosilala",
-  role: "Freelance Fullstack Next.js",
+  role: "Fullstack Next.js",
   location: "Madagascar",
 
   tagline: "Je conçois et livre des produits web de bout en bout.",
 
   bio: [
-    "Freelance Fullstack Next.js basé à Madagascar.",
+    "Fullstack Next.js basé à Madagascar.",
     "Je conçois et livre des produits web de bout en bout : cadrage, dev, packaging, déploiement, formation.",
     "Contextes : administration publique, industrie, agritech, e-commerce — puis scale-ups.",
   ],

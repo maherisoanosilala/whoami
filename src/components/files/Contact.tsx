@@ -34,7 +34,7 @@ export function Contact() {
           />
         </h2>
         <p className="text-[13px] text-nosy-dim">
-          Dispo pour missions freelance. Réponse sous 24h.
+          Dispo pour missions freelance ou quelque chose de ce genre. Réponse sous 24h.
         </p>
       </motion.header>
 
