@@ -108,7 +108,7 @@ export function About() {
       {/* Bouton CV : lift au survol, press au clic */}
       <motion.div variants={item} className="pt-2">
         <motion.a
-          href="/Maherisoa.pdf"
+          href="/Maherisoa_Pro.pdf"
           download
           whileHover={{ y: -1 }}
           whileTap={{ scale: 0.98 }}
