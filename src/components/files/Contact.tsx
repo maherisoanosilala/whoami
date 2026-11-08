@@ -39,7 +39,7 @@ export function Contact() {
       </motion.header>
 
       <motion.div
-        variants={cascade(0.06, 0.15)}
+        variants={cascade(0.06, 0.15)} 
         className="grid gap-2"
       >
         {socials.map(({ key, label, icon: Icon, href, value, external }) => (

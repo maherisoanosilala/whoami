@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { TreeFile } from "@/lib/tree";
 import { CodeViewer } from "./CodeViewer";
 import { About } from "../files/About";
 import { Missions } from "../files/Missions";
 import { Stack } from "../files/Stack";
 import { Contact } from "../files/Contact";
 import { Readme } from "../files/Readme";
+import { TreeFile } from "@/types/whoami.type";
 
 const PREVIEWS: Record<string, () => React.ReactElement> = {
   "src/app/whoami/about/page.tsx": About,
