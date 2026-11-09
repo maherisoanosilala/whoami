@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { ActivityBar } from "./ActivityBar";
 import { Sidebar } from "./Sidebar";
+import { TitleBar } from "./TitleBar";   // ← nouveau
 import { Tabs } from "./Tabs";
 import { StatusBar } from "./StatusBar";
 import { CommandPalette } from "./CommandPalette";
@@ -15,7 +16,6 @@ export function IdeShell({ children }: { children: React.ReactNode }) {
   const openTab = useIDE((s) => s.openTab);
 
   useEffect(() => {
-    // URL = slug → on le convertit en path interne
     const slug = pathname.replace(/^\//, "");
     const path = slugToPath(slug) ?? "README.md";
     if (getFile(path)) openTab(path);
@@ -23,6 +23,9 @@ export function IdeShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="h-screen flex flex-col bg-nosy-bg text-nosy-fg">
+      {/* ⬇️ Title bar full-width, comme VS Code */}
+      <TitleBar />
+
       <div className="flex-1 flex min-h-0">
         <ActivityBar />
         <Sidebar />
@@ -33,6 +36,7 @@ export function IdeShell({ children }: { children: React.ReactNode }) {
           </div>
         </main>
       </div>
+
       <StatusBar />
       <CommandPalette />
     </div>
