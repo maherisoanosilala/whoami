@@ -14,7 +14,7 @@ export const profile = {
   ],
 
   contact: {
-    email: "nosilala13@gmail.com",
+    email: "nosilala13@gmail.com ",
     whatsapp: "+261 38 06 710 10",
     whatsappUrl: "https://wa.me/261380671010",
     github: "https://github.com/maherisoanosilala",
